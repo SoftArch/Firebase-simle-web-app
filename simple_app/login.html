@@ -1,0 +1,42 @@
+<html>
+  <head>
+    <title>Simple App</title>
+    <link href="img/favicon.png" rel="icon">
+  </head>
+    <body >
+      <div id="firebaseui-auth-container"></div>
+
+
+      <script src="lib/jquery/jquery.min.js"></script>
+      <script type="text/javascript" src="lib/jquery.backstretch.min.js"></script>
+
+      <script src="https://www.gstatic.com/firebasejs/8.3.3/firebase-app.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/8.3.3/firebase.js"></script>
+      <script src="https://www.gstatic.com/firebasejs/ui/4.8.0/firebase-ui-auth.js"></script>
+      <link type="text/css" rel="stylesheet" href="https://www.gstatic.com/firebasejs/ui/4.8.0/firebase-ui-auth.css" />
+
+      <script src="firebase_init.js"></script>
+
+      <script>
+        $.backstretch("img/login-bg.jpg", {
+          speed: 500
+        });
+
+        auth.onAuthStateChanged(function(user) {
+            if (user) {
+                window.location.href = "index.html";
+            } else {
+                // Initialize the FirebaseUI Widget using Firebase.
+                var ui = new firebaseui.auth.AuthUI(auth);
+
+                ui.start('#firebaseui-auth-container', {
+                    signInOptions: [
+                        firebase.auth.EmailAuthProvider.PROVIDER_ID
+                    ],
+                    signInSuccessUrl: 'index.html',
+                });
+            }
+        });
+      </script>
+    </body>
+</html>
