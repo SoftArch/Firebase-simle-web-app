@@ -45,7 +45,7 @@ function addMessageFromTemplate(user,message,time){
 
 var room_data = [];
 
-$(document).ready(function() {
+$(document).ready(function(){
 
     // Odaların alınması
     firestore.collection("rooms").orderBy("create_date", "desc").onSnapshot((querySnapshot) => {
@@ -69,7 +69,7 @@ $(document).ready(function() {
 
 });
 
-function getRoomMessage(room_element) {
+function getRoomMessage(room_element){
 
     var roomId = room_element.getAttribute("room-id");
     var title = document.getElementById("chat_title");
@@ -77,8 +77,7 @@ function getRoomMessage(room_element) {
     getRoomMessageWithRoomId(roomId,title);
 }
 
-function getRoomMessageWithRoomId(roomId,title)
-{
+function getRoomMessageWithRoomId(roomId,title){
     if(roomId)
     {
         var container = document.getElementById("chat_container");
@@ -99,8 +98,7 @@ function getRoomMessageWithRoomId(roomId,title)
     }
 }
 
-function refreshRoomMessage()
-{
+function refreshRoomMessage(){
     var title = document.getElementById("chat_title");
     var roomId = title.getAttribute("room-id");
 
@@ -111,23 +109,28 @@ function refreshRoomMessage()
 }
 
 function addRoom(){
-    var newRoomName = document.getElementById('roomName');
-
-    firestore.collection("rooms").add({
-        creator: auth.currentUser.uid,
-        creator_mail: auth.currentUser.email,
-        name: newRoomName.value,
-        create_date: firebase.firestore.Timestamp.now(),
-        chats:[]
-    })
-    .then((docRef) => {
-        console.log("Document written with ID: ", docRef.id);
-    })
-    .catch((error) => {
-        console.error("Error adding document: ", error);
-    });
-
-    newRoomName.value = "";
+    var newRoomName = document.getElementById('roomName').value;
+    if(newRoomName)
+    {
+        firestore.collection("rooms").add({
+            creator: auth.currentUser.uid,
+            creator_mail: auth.currentUser.email,
+            name: newRoomName,
+            create_date: firebase.firestore.Timestamp.now(),
+            chats:[]
+        })
+        .then((docRef) => {
+            console.log("Document written with ID: ", docRef.id);
+        })
+        .catch((error) => {
+            console.error("Error adding document: ", error);
+        });
+    
+        newRoomName.value = "";
+    }
+    else{
+        alert("Oda adı boş olamaz");
+    }
 }
 
 function addMessage(){
@@ -139,9 +142,9 @@ function addMessage(){
         var room = firestore.collection("rooms").doc(roomId);
         room.update({
             chats: firebase.firestore.FieldValue.arrayUnion({
-                userid:firebase.auth().currentUser.uid,
-                usermail:firebase.auth().currentUser.email,
-                messagetext:message.value,
+                userid: auth.currentUser.uid,
+                usermail: auth.currentUser.email,
+                messagetext: message.value,
                 create_date: firebase.firestore.Timestamp.now(),
             })
         });

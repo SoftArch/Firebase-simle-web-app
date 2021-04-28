@@ -16,11 +16,23 @@
 <body>
 
     <template id="room_template">
-        <div class="room-box">
-            <h5 class="text-primary"><a href="#">...</a></h5>
-            <p><span class="text-muted">Admin :</span> <span>...</span></p>
+        <div class="mb" onclick="getRoomMessage(this)" style="cursor: pointer;">
+            <div class="weather-3">
+              <div class="info">
+                <div class="row">
+                  <h3 style="margin-left:25px;">MADRID</h3>
+                  <div class="col-sm-6 col-xs-6 pull-left">
+                    <p class="goleft"><i class="fa fa-tint"></i> 13%</p>
+                  </div>
+                  <div class="col-sm-6 col-xs-6 pull-right">
+                    <p class="goright"><i class="fa fa-flag"></i> 15 MPH</p>
+                  </div>
+                </div>
+              </div>
+            </div>
         </div>
     </template>
+
     <template id="message_template">
         <div class="group-rom">
           <div class="first-part odd">Sam Soffes</div>
@@ -34,7 +46,7 @@
     <section id="container">
         <!--header start-->
         <header class="header black-bg">
-            <a href="index.html" class="logo"><b>SIMPLE<span> APP</span></b></a>
+            <a href="index.html" class="logo"><b>SIMPLE<span id="logo_2"> APP</span></b></a>
             <div class="top-menu">
                 <ul class="nav pull-right top-menu">
                     <li><a class="logout" href="javascript:logout();">Çıkış</a></li>
@@ -50,7 +62,7 @@
                 <aside class="mid-side">
                     <div class="chat-room-head">
                         <a href="javascript:addRoom();" class="pull-right btn btn-theme02">+ Oda Oluştur</a>
-                        <input type="text" class="pull-right position search-btn">
+                        <input id="roomName" type="text" class="pull-right position search-btn">
                     </div>
                     <div id="room_list_container" class="rooms">
                         <!--Burada odalar yer alacak-->
@@ -59,19 +71,20 @@
                 </aside>
                 <aside class="right-side">
                     <div class="user-head">
-                        <p id="chat-title">...</p>
+                        <p id="chat_title">...</p>
                     </div>
                     <div id="chat_container" class="chat-group" style="height: 600px;width: 100%;display: inline-block; overflow-y: auto;">
                         <!--Burada mesajlar yer alacak-->
                     </div>
                     
                     <footer>
-                        <div class="chat-txt">
-                        <input type="text" class="form-control">
+                        <div class="col-md-11">
+                            <input id="userMessage" type="text" class="form-control">
                         </div>
-                        <button onclick="addMessage()" class="btn btn-theme">Gönder</button>
+                        <div class="col-md-1">
+                            <button onclick="addMessage()" class="btn btn-theme pull-right">Gönder</button>
+                        </div>
                     </footer>
-                
                 </aside>
             </div>
             </section>
@@ -81,6 +94,9 @@
     </section>
     <script src="lib/jquery/jquery.min.js"></script>
     <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+
+    <!--firebase js-->
+
     <script src="index.js"></script>
 </body>
 

@@ -1,3 +1,4 @@
+// Start | Step 1 - Initialize
 var firebaseConfig = {
     apiKey: "AIzaSyAoICtN1gTIRmn251rRvA612VcifNgB69M",
     authDomain: "dt-simple-test.firebaseapp.com",
@@ -12,7 +13,9 @@ var firebaseConfig = {
 firebase.initializeApp(firebaseConfig);
 firebase.analytics();
 firebase.performance();
+// End | Step 1 - Initialize
 
+// Start | Step 2 - Auth
 var auth = firebase.auth();
 
 auth.onAuthStateChanged(function(user) {
@@ -20,20 +23,24 @@ auth.onAuthStateChanged(function(user) {
       window.location.href = "login.html";
   }
 });
+// End | Step 2 - Auth
 
+// Start | Step 3 - Firestore
 // Firestore tanımlama
 firestore = firebase.firestore();
+// End | Step 3 - Firestore
 
+// Start | Step 4 - Remote Config
 const remoteConfig = firebase.remoteConfig();
 remoteConfig.settings.minimumFetchIntervalMillis = 1;
-var logo_color ="";
 
 remoteConfig.fetchAndActivate()
 .then(() => {
-    logo_color = remoteConfig.getValue("logo_color")._value;
+    var logo_color = remoteConfig.getValue("logo_color")._value;
     //Remote Config ayarlarının uygulanması
     $("#logo_2").css("color", logo_color);
 })
 .catch((err) => {
     console.log(err);
 });
+// End | Step 4 - Remote Config
